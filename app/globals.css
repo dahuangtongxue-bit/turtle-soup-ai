@@ -1,0 +1,227 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@500;700&display=swap");
+
+/* ============================================================
+   海龟汤 · 多模型推理 —— 深夜推理电台风格
+   ============================================================ */
+:root {
+  --bg: #0c0a11;
+  --bg-2: #12101a;
+  --panel: #1a1623;
+  --panel-2: #221d2e;
+  --line: #2c2638;
+  --ink: #ece5d8;
+  --ink-soft: #b6ad9f;
+  --muted: #7d7589;
+  --amber: #e7ac52;
+  --amber-soft: #f0c887;
+  --amber-glow: rgba(231, 172, 82, 0.5);
+  --yes: #62b87f;
+  --no: #d96a6a;
+  --na: #6f6880;
+  --gold: #f1ca6a;
+  --shadow: 0 18px 50px rgba(0, 0, 0, 0.55);
+  --r: 14px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body { background: var(--bg); }
+
+body {
+  font-family: "Noto Sans SC", -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+  color: var(--ink);
+  background:
+    radial-gradient(1200px 600px at 50% -10%, rgba(231, 172, 82, 0.08), transparent 60%),
+    radial-gradient(900px 500px at 90% 110%, rgba(120, 90, 200, 0.07), transparent 60%),
+    var(--bg);
+  min-height: 100vh;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+body::after {
+  content: "";
+  position: fixed; inset: 0; pointer-events: none; z-index: 9999;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.wrap { max-width: 1180px; margin: 0 auto; padding: 28px 20px 80px; }
+
+/* 顶部 */
+.masthead {
+  display: flex; align-items: flex-end; justify-content: space-between;
+  gap: 20px; flex-wrap: wrap;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 18px; margin-bottom: 26px;
+}
+.brand h1 {
+  font-family: "Noto Serif SC", serif; font-weight: 700;
+  font-size: clamp(26px, 4vw, 40px); letter-spacing: 2px;
+  color: var(--amber-soft);
+  text-shadow: 0 0 24px var(--amber-glow);
+}
+.brand .sub { color: var(--muted); font-size: 13px; letter-spacing: 4px; margin-top: 4px; }
+.brand .sub b { color: var(--ink-soft); font-weight: 500; }
+.masthead .tag {
+  font-size: 12px; color: var(--muted); border: 1px solid var(--line);
+  padding: 6px 12px; border-radius: 999px; display: flex; align-items: center; gap: 6px;
+}
+
+/* 面板 */
+.panel {
+  background: linear-gradient(180deg, var(--panel), var(--bg-2));
+  border: 1px solid var(--line); border-radius: var(--r);
+  box-shadow: var(--shadow);
+}
+
+/* 配置区 */
+.setup { padding: 28px; }
+.setup h2 { font-family: "Noto Serif SC", serif; font-size: 20px; margin-bottom: 18px; color: var(--ink); display: flex; align-items: center; gap: 8px; }
+.field { margin-bottom: 18px; }
+.field > label { display: block; font-size: 13px; color: var(--muted); margin-bottom: 8px; letter-spacing: 1px; }
+select, .num-input {
+  width: 100%; background: var(--bg-2); color: var(--ink);
+  border: 1px solid var(--line); border-radius: 10px;
+  padding: 11px 13px; font-size: 14px; font-family: inherit;
+}
+select:focus, .num-input:focus { outline: none; border-color: var(--amber); }
+.row { display: flex; gap: 14px; flex-wrap: wrap; }
+.row .field { flex: 1; min-width: 150px; }
+
+.btn {
+  border: none; cursor: pointer; font-family: inherit; font-weight: 700;
+  border-radius: 10px; padding: 12px 22px; font-size: 14px; letter-spacing: 1px;
+  transition: transform 0.12s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+  display: inline-flex; align-items: center; gap: 8px;
+}
+.btn:active { transform: translateY(1px) scale(0.99); }
+.btn.primary {
+  background: linear-gradient(135deg, var(--amber), #c98a2e);
+  color: #1a1206; box-shadow: 0 8px 24px var(--amber-glow);
+}
+.btn.ghost { background: transparent; color: var(--ink-soft); border: 1px solid var(--line); }
+.btn.ghost:hover { border-color: var(--amber); color: var(--amber-soft); }
+.btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+.toggle { display: flex; align-items: center; gap: 10px; cursor: pointer; user-select: none; font-size: 13px; color: var(--ink-soft); }
+.toggle input { width: 18px; height: 18px; accent-color: var(--amber); }
+
+/* 对局布局 */
+.stage { display: grid; grid-template-columns: 1.55fr 1fr; gap: 22px; align-items: start; }
+@media (max-width: 880px) { .stage { grid-template-columns: 1fr; } }
+
+.soup-surface { padding: 24px 26px; position: relative; overflow: hidden; }
+.soup-surface .type-tag {
+  display: inline-block; font-size: 12px; letter-spacing: 2px;
+  padding: 4px 12px; border-radius: 999px; margin-bottom: 14px;
+  border: 1px solid var(--line); color: var(--amber-soft);
+}
+.soup-surface .type-tag.red { color: var(--no); border-color: rgba(217,106,106,0.4); }
+.soup-surface .label { font-size: 12px; letter-spacing: 4px; color: var(--muted); margin-bottom: 8px; }
+.soup-surface .text {
+  font-family: "Noto Serif SC", serif; font-size: 19px; line-height: 1.9; color: var(--ink);
+}
+.soup-surface::before {
+  content: "汤"; position: absolute; right: -10px; top: -30px;
+  font-family: "Noto Serif SC", serif; font-size: 160px; color: rgba(231,172,82,0.05);
+  pointer-events: none;
+}
+
+.clue-wall { padding: 20px 22px; margin-top: 22px; }
+.clue-wall .head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 14px; }
+.clue-wall .head .t { font-size: 13px; letter-spacing: 3px; color: var(--muted); }
+.clue-wall .head .count { font-family: "Noto Serif SC", serif; font-size: 22px; color: var(--amber-soft); }
+.clue-cells { display: flex; gap: 10px; flex-wrap: wrap; }
+.cell {
+  flex: 1; min-width: 54px; height: 56px; border-radius: 10px;
+  background: var(--bg-2); border: 1px solid var(--line);
+  display: flex; align-items: center; justify-content: center;
+  font-family: "Noto Serif SC", serif; font-size: 20px; color: var(--muted);
+  transition: all 0.5s ease; position: relative;
+}
+.cell.lit {
+  background: linear-gradient(135deg, rgba(231,172,82,0.25), rgba(231,172,82,0.08));
+  border-color: var(--amber); color: var(--amber-soft);
+  box-shadow: 0 0 20px var(--amber-glow); animation: pop 0.5s ease;
+}
+@keyframes pop { 0% { transform: scale(0.7); } 60% { transform: scale(1.12); } 100% { transform: scale(1); } }
+
+.roster { padding: 18px 20px; }
+.roster .t { font-size: 13px; letter-spacing: 3px; color: var(--muted); margin-bottom: 14px; }
+.player {
+  display: flex; align-items: center; gap: 12px; padding: 9px 10px;
+  border-radius: 10px; margin-bottom: 6px; transition: background 0.3s ease;
+}
+.player.active { background: var(--panel-2); box-shadow: inset 0 0 0 1px var(--line); }
+.dot { width: 11px; height: 11px; border-radius: 50%; flex-shrink: 0; box-shadow: 0 0 8px currentColor; }
+.player .name { font-size: 14px; font-weight: 500; }
+.player .role { font-size: 11px; color: var(--muted); margin-left: auto; }
+.player.host .role { color: var(--amber-soft); }
+.player .thinking-tag { color: var(--amber-soft); font-size: 12px; margin-left: 6px; animation: blink 1s infinite; }
+@keyframes blink { 50% { opacity: 0.3; } }
+
+.controls { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin: 22px 0 10px; }
+.controls .spacer { flex: 1; }
+.speed-pick { display: flex; gap: 6px; }
+.speed-pick button {
+  background: var(--bg-2); border: 1px solid var(--line); color: var(--muted);
+  border-radius: 8px; padding: 7px 12px; font-size: 12px; cursor: pointer; font-family: inherit;
+}
+.speed-pick button.on { border-color: var(--amber); color: var(--amber-soft); }
+
+.feed { margin-top: 8px; display: flex; flex-direction: column; gap: 14px; }
+.turn {
+  border: 1px solid var(--line); border-radius: var(--r); padding: 16px 18px;
+  background: var(--panel); animation: slidein 0.4s ease both;
+}
+@keyframes slidein { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+.turn .who { display: flex; align-items: center; gap: 9px; margin-bottom: 8px; }
+.turn .who .name { font-weight: 700; font-size: 14px; }
+.turn .who .persona { font-size: 11px; color: var(--muted); }
+.turn .thought { font-size: 13px; color: var(--ink-soft); font-style: italic; opacity: 0.85; margin-bottom: 10px; }
+.turn .q { font-size: 16px; color: var(--ink); }
+.turn .q::before { content: "“"; color: var(--amber); }
+.turn .q::after { content: "”"; color: var(--amber); }
+
+.verdict { display: inline-flex; align-items: center; gap: 8px; margin-top: 12px; }
+.badge {
+  font-family: "Noto Serif SC", serif; font-weight: 700; font-size: 15px;
+  padding: 5px 16px; border-radius: 999px;
+}
+.badge.yes { background: rgba(98,184,127,0.16); color: var(--yes); border: 1px solid rgba(98,184,127,0.4); }
+.badge.no  { background: rgba(217,106,106,0.16); color: var(--no); border: 1px solid rgba(217,106,106,0.4); }
+.badge.na  { background: rgba(125,117,137,0.16); color: var(--na); border: 1px solid var(--line); }
+.host-line { font-size: 13px; color: var(--amber-soft); margin-left: 4px; }
+.host-line.spark { animation: sparkle 0.8s ease; font-weight: 700; }
+@keyframes sparkle { 0% { text-shadow: none; } 50% { text-shadow: 0 0 16px var(--amber-glow); } }
+
+.turn.solve { border-color: rgba(241,202,106,0.45); background: linear-gradient(180deg, rgba(241,202,106,0.06), var(--panel)); }
+.turn.solve .tagline { font-size: 12px; letter-spacing: 2px; color: var(--gold); margin-bottom: 8px; }
+.solve-verdict { margin-top: 12px; font-weight: 700; }
+.solve-verdict.pass { color: var(--gold); }
+.solve-verdict.close { color: var(--amber-soft); }
+.solve-verdict.fail { color: var(--no); }
+
+.sys { text-align: center; font-size: 12px; color: var(--muted); letter-spacing: 2px; padding: 6px; }
+.sys.hint { color: var(--amber-soft); }
+.err { color: var(--no); font-size: 12px; }
+
+.reveal { padding: 30px; margin-top: 22px; text-align: center; animation: rise 0.7s ease both; }
+@keyframes rise { from { opacity: 0; transform: translateY(24px) scale(0.97); } to { opacity: 1; transform: none; } }
+.reveal .crown { font-size: 13px; letter-spacing: 5px; color: var(--muted); }
+.reveal .winner {
+  font-family: "Noto Serif SC", serif; font-size: 30px; margin: 8px 0 4px;
+  color: var(--gold); text-shadow: 0 0 26px rgba(241,202,106,0.4);
+}
+.reveal .bottom-label { font-size: 12px; letter-spacing: 4px; color: var(--muted); margin: 22px 0 10px; }
+.reveal .bottom-text {
+  font-family: "Noto Serif SC", serif; font-size: 17px; line-height: 1.9;
+  color: var(--ink); text-align: left; max-width: 640px; margin: 0 auto;
+  border-left: 2px solid var(--amber); padding-left: 18px;
+}
+.scoreboard { margin: 24px auto 0; max-width: 460px; text-align: left; }
+.scoreboard .srow { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px dashed var(--line); }
+.scoreboard .srow .n { font-weight: 500; }
+.scoreboard .srow .pts { margin-left: auto; color: var(--amber-soft); font-family: "Noto Serif SC", serif; }
+
+.hidden { display: none !important; }

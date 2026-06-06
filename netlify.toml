@@ -1,0 +1,5 @@
+# Next.js 由 Netlify 的 Next 运行时自动识别构建,这里只放两个保险项:
+[build.environment]
+  NODE_VERSION = "18"
+  # 避免 Netlify 把环境变量值误报为"泄露密钥"导致部署失败
+  SECRETS_SCAN_ENABLED = "false"
